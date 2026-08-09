@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Heading, Button } from "@/components/ui";
+import { Container, Heading, Button, SafeImage } from "@/components/ui";
 import { omCopy } from "@/lib/i18n/copy";
 
 /* Contrast band (home OneTeam treatment): full-bleed photo + gradient.
@@ -9,7 +8,7 @@ export async function OmOnePlan() {
   const { OM_ONEPLAN } = omCopy();
   return (
     <section className="relative overflow-hidden py-16 text-white xl:py-24">
-      <Image
+      <SafeImage
         src={OM_ONEPLAN.background.src}
         alt={OM_ONEPLAN.background.alt}
         fill

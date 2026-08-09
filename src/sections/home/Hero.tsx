@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Button, Heading, Dots, ImageCarousel } from "@/components/ui";
+import { Container, Button, Heading, Dots, ImageCarousel, SafeImage } from "@/components/ui";
 import { OpenQuoteButton } from "@/components/quote";
 import { getProjects } from "@/lib/sanity/queries";
 import { homeCopy } from "@/lib/i18n/copy";
@@ -31,7 +30,7 @@ export async function Hero() {
             makes phones fetch the 16w variant instead. px-only values on
             purpose: any vw entry makes Next floor the srcset at ~384w, so the
             1px trick only works with px (44vw of 1280/1920 ≈ 563/845px). */}
-        <Image
+        <SafeImage
           src={HERO.image.src}
           alt={HERO.image.alt}
           fill
@@ -93,7 +92,7 @@ export async function Hero() {
           the 340px card + gradient overlay hide the difference, and this was
           the page's heaviest image in Lighthouse. */}
       <div className="relative mx-4 mb-4 h-[340px] overflow-hidden rounded-[20px] xl:hidden">
-        <Image
+        <SafeImage
           src={HERO.image.src}
           alt={HERO.image.alt}
           fill

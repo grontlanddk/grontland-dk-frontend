@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Heading, Button, StarChip } from "@/components/ui";
+import { Heading, Button, StarChip, SafeImage } from "@/components/ui";
 import { homeCopy } from "@/lib/i18n/copy";
 
 /* About — Figma #3023:964. Mist 2-col: left copy/trades/CTA, right photo with
@@ -45,7 +44,7 @@ export async function About() {
 
         {/* Right — photo + centered fact chips; absolute on xl to bleed right */}
         <div className="relative min-h-[380px] xl:absolute xl:inset-y-0 xl:left-[calc(50%-30px)] xl:right-0 xl:min-h-0">
-          <Image
+          <SafeImage
             src={ABOUT.image}
             alt={ABOUT.imageAlt}
             fill

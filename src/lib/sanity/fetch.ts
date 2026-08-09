@@ -1,17 +1,18 @@
 import { client } from "./client";
-import { urlFor } from "./image";
+import { urlForImage } from "./image";
 
 /* Queries project image fields as {asset, crop, hotspot} (see IMG_SRC in
-   queries.ts). This walk replaces each with a urlFor() URL string, so
-   editor-set crops from the Studio are applied while every consumer keeps
-   the plain string `src` shape. Only image fields carry an `asset` key in
-   this dataset, so the shape test is safe. */
+   queries.ts). This walk replaces each with a sized Sanity CDN URL
+   (width + auto format), so crops apply and Vercel Image Optimization is
+   not needed for CMS photos. Consumers keep the plain string `src` shape.
+   Only image fields carry an `asset` key in this dataset, so the shape
+   test is safe. */
 function resolveImageUrls<T>(node: T): T {
   if (Array.isArray(node)) return node.map(resolveImageUrls) as T;
   if (node && typeof node === "object") {
     if ("asset" in node) {
       const img = node as { asset?: { _ref?: string } | null };
-      return (img.asset ? urlFor(img).url() : null) as T;
+      return (img.asset ? urlForImage(img, { width: 1920 }).url() : null) as T;
     }
     return Object.fromEntries(
       Object.entries(node).map(([k, v]) => [k, resolveImageUrls(v)]),

@@ -1,8 +1,7 @@
-import Image from "next/image";
 
 import { ArrowIcon } from "@/components/icons";
 import Link from "next/link";
-import { Container, Heading } from "@/components/ui";
+import { Container, Heading, SafeImage } from "@/components/ui";
 import { RingDecor } from "@/sections/shared";
 import { getServiceCards } from "@/lib/sanity/queries";
 import { b2bCopy } from "@/lib/i18n/copy";
@@ -36,7 +35,7 @@ export async function B2bServices() {
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white transition-shadow hover:shadow-lg"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
+                  <SafeImage
                     src={card.image}
                     alt={card.imageAlt}
                     fill

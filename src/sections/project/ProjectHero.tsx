@@ -1,6 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import { Button, Container, Heading } from "@/components/ui";
+import { Button, Container, Heading, SafeImage } from "@/components/ui";
 import { type Project } from "@/constants/projects";
 import { projectsCopy } from "@/lib/i18n/copy";
 
@@ -52,7 +51,7 @@ export async function ProjectHero({ project }: { project: Project }) {
           </div>
 
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border-4 border-leaf">
-            <Image
+            <SafeImage
               src={project.heroImage}
               alt={project.heroImageAlt}
               fill

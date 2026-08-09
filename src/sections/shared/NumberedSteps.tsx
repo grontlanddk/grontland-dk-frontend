@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Heading, Button, InfoBox } from "@/components/ui";
+import { Container, Heading, Button, InfoBox, SafeImage } from "@/components/ui";
 import type { InfoBoxVariant } from "@/components/ui";
 import { OpenQuoteButton } from "@/components/quote";
 import { cn } from "@/util/cn";
@@ -52,7 +51,7 @@ export function NumberedSteps({
       {backgroundImage && (
         <>
           {/* Full-bleed photo + gradient — home OneTeam treatment. */}
-          <Image
+          <SafeImage
             src={backgroundImage.src}
             alt={backgroundImage.alt}
             fill

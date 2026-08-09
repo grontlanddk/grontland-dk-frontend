@@ -1,8 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { ArrowIcon } from "@/components/icons";
-import { Container } from "@/components/ui";
+import { Container, SafeImage } from "@/components/ui";
 import type { YdelserIndexData } from "@/lib/sanity/queries";
 
 /* /ydelser card grid — one card per service document (nav, cardDesc with
@@ -19,7 +18,7 @@ export function YdelserIndexGrid({ cards }: { cards: YdelserIndexData["cards"] }
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white transition-shadow hover:shadow-lg"
               >
                 <div className="relative aspect-[16/9] overflow-hidden">
-                  <Image
+                  <SafeImage
                     src={card.image.src}
                     alt={card.image.alt}
                     fill

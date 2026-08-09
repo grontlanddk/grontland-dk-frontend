@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Heading, Button, Dots, type ButtonVariant } from "@/components/ui";
+import { Container, Heading, Button, Dots, type ButtonVariant, SafeImage } from "@/components/ui";
 import { OpenQuoteButton } from "@/components/quote";
 import { cn } from "@/util/cn";
 
@@ -65,7 +64,7 @@ export function PageHero({
         <div className="absolute inset-y-0 right-0 z-20 hidden w-[43.5%] overflow-hidden rounded-l-[20px] xl:block">
           {/* sizes collapses to 1px below xl — see Hero.tsx for why the
               values must be px-only (vw entries floor the srcset at 384w). */}
-          <Image
+          <SafeImage
             src={image.src}
             alt={image.alt}
             fill
@@ -140,7 +139,7 @@ export function PageHero({
       {image && (
         <div className="relative mx-4 mb-4 h-[340px] overflow-hidden rounded-[20px] xl:hidden">
           {/* q75: 340px card + gradient overlay hide the q85 difference */}
-          <Image src={image.src} alt={image.alt} fill className="object-cover" sizes="100vw" />
+          <SafeImage src={image.src} alt={image.alt} fill className="object-cover" sizes="100vw" />
           <div
             aria-hidden
             className="absolute inset-0 bg-[linear-gradient(170deg,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.05)_55%,rgba(0,0,0,0.7)_100%)]"

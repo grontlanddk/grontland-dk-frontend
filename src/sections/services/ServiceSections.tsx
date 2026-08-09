@@ -1,8 +1,7 @@
-import Image from "next/image";
 
 import { GalleryCarousel, type GalleryItem } from "@/components/gallery";
 import { ProjectCard } from "@/components/project";
-import { Button, Container, Heading } from "@/components/ui";
+import { Button, Container, Heading, SafeImage } from "@/components/ui";
 import { ui } from "@/lib/i18n/copy";
 import type { ServicePageData } from "@/lib/sanity/queries";
 import {
@@ -141,7 +140,7 @@ export function ServiceSeoText({ service }: { service: ServicePageData }) {
             )}
             {primary && (
               <div className="relative z-10 h-[240px] overflow-hidden rounded-xl xl:h-[280px]">
-                <Image
+                <SafeImage
                   src={primary.src}
                   alt={primary.alt}
                   fill
@@ -152,7 +151,7 @@ export function ServiceSeoText({ service }: { service: ServicePageData }) {
             )}
             {secondary && (
               <div className="relative z-10 hidden h-[160px] overflow-hidden rounded-xl sm:block xl:h-[180px] xl:w-[75%] xl:self-end">
-                <Image
+                <SafeImage
                   src={secondary.src}
                   alt={secondary.alt}
                   fill

@@ -1,7 +1,6 @@
-import Image from "next/image";
 
 import Link from "next/link";
-import { Container, Heading, Button } from "@/components/ui";
+import { Container, Heading, Button, SafeImage } from "@/components/ui";
 import { OpenQuoteButton } from "@/components/quote";
 import { getSiteSettings } from "@/lib/sanity/queries";
 import { ui } from "@/lib/i18n/copy";
@@ -36,7 +35,7 @@ export async function CtaBand({
     <section className="relative overflow-hidden bg-black text-white">
       {image && (
         <div className="absolute bottom-0 right-0 top-0 z-0 hidden w-[42%] overflow-hidden rounded-l-[20px] xl:block">
-          <Image src={image.src} alt={image.alt} fill sizes="45vw" className="object-cover" />
+          <SafeImage src={image.src} alt={image.alt} fill sizes="45vw" className="object-cover" />
           <div
             aria-hidden
             className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0)_45%)]"
@@ -79,7 +78,7 @@ export async function CtaBand({
         </div>
         {image && (
           <div className="relative mt-10 h-[220px] overflow-hidden rounded-xl xl:hidden">
-            <Image src={image.src} alt={image.alt} fill sizes="100vw" className="object-cover" />
+            <SafeImage src={image.src} alt={image.alt} fill sizes="100vw" className="object-cover" />
           </div>
         )}
       </Container>

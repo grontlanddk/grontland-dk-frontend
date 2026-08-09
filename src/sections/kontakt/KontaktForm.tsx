@@ -1,7 +1,6 @@
-import Image from "next/image";
 
 import Link from "next/link";
-import { Container, Heading, InfoBox } from "@/components/ui";
+import { Container, Heading, InfoBox, SafeImage } from "@/components/ui";
 import { QuoteModalForm } from "@/components/quote";
 import { kontaktCopy } from "@/lib/i18n/copy";
 
@@ -50,7 +49,7 @@ export async function KontaktForm() {
             </ul>
             {/* Fills the column gap under the cards — Figma #3049:154. */}
             <div className="relative mt-3 min-h-[220px] flex-1 overflow-hidden rounded-2xl">
-              <Image
+              <SafeImage
                 src={KONTAKT_INFO.image.src}
                 alt={KONTAKT_INFO.image.alt}
                 fill

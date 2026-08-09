@@ -1,7 +1,6 @@
-import Image from "next/image";
 
 import { OpenQuoteButton } from "@/components/quote";
-import { Container, Heading } from "@/components/ui";
+import { Container, Heading, SafeImage } from "@/components/ui";
 import type { CtaBandData } from "@/lib/sanity/queries";
 
 /* Project listing + detail CTA — black band (contrasts pine footer), photo + copy.
@@ -32,7 +31,7 @@ export function ProjectCta({ cta }: { cta: CtaBandData }) {
         </div>
 
         <div className="relative aspect-[21/9] overflow-hidden rounded-2xl md:aspect-auto md:min-h-0">
-          <Image
+          <SafeImage
             src={image}
             alt={imageAlt}
             fill

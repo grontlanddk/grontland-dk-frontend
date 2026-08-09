@@ -9,3 +9,4 @@ export { FilterPill } from "./FilterPill";
 export { Dropdown, type DropdownItem } from "./Dropdown";
 export { Marquee } from "./Marquee";
 export { ImageCarousel, type CarouselImage } from "./ImageCarousel";
+export { SafeImage, type SafeImageProps } from "./SafeImage";

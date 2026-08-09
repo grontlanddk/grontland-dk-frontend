@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Heading, Dots } from "@/components/ui";
+import { Container, Heading, Dots, SafeImage } from "@/components/ui";
 
 const FALLBACK_SRC = "/images/galleri/galleri-seo.jpg";
 const FALLBACK_ALT = "Grønt Land DK medarbejder på en haveopgave";
@@ -22,7 +21,7 @@ export function GalleriSeoText({
     <section className="relative overflow-hidden bg-mist">
       {/* Left photo — flush to viewport edge; mild vertical bleed clipped by section. */}
       <div className="relative h-[280px] w-full overflow-hidden sm:h-[360px] xl:absolute xl:inset-y-0 xl:left-0 xl:h-auto xl:w-[min(44vw,629px)]">
-        <Image
+        <SafeImage
           src={photo.src}
           alt={photo.alt}
           fill

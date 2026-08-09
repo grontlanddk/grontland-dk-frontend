@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Heading, StarChip } from "@/components/ui";
+import { Container, Heading, StarChip, SafeImage } from "@/components/ui";
 import { b2bCopy } from "@/lib/i18n/copy";
 
 /* § 4 — Capabilities & responsibility. Contrast band (pine): the reliable-capacity
@@ -26,7 +25,7 @@ export async function B2bWhy() {
                 width. */}
             <div className="mt-8 border-t border-white/15 pt-6">
               <div className="relative aspect-[560/288] w-full overflow-hidden rounded-[16px]">
-                <Image
+                <SafeImage
                   src={B2B_WHY.image.src}
                   alt={B2B_WHY.image.alt}
                   fill

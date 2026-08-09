@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect } from "react";
 
 import { ChevronIcon } from "@/components/icons";
@@ -10,6 +9,7 @@ import { Backdrop } from "./Backdrop";
 import { wrapIndex } from "./galleryLayout";
 import { Modal } from "./Modal";
 import type { GalleryItem } from "./types";
+import { SafeImage } from "@/components/ui";
 
 export function GalleryLightbox({
   items,
@@ -58,7 +58,7 @@ export function GalleryLightbox({
       <Modal isOpen={isOpen} onClose={onClose}>
         <div className="relative flex min-h-0 flex-1 items-center justify-center px-4 pt-12 pb-4">
           <div className="relative h-full w-full">
-            <Image
+            <SafeImage
               key={current._key}
               src={current.image.link}
               alt={current.image.alt || ("Galleri billede")}

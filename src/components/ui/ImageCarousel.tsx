@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { SafeImage } from "./SafeImage";
 
 import { cn } from "@/util/cn";
 
@@ -86,7 +86,7 @@ export function ImageCarousel({
               card.className,
             )}
           >
-            <Image
+            <SafeImage
               src={card.image.src}
               alt={card.image.alt ?? ""}
               fill

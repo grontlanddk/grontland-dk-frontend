@@ -1,7 +1,6 @@
-import Image from "next/image";
 import { Fragment } from "react";
 
-import { Heading, Star } from "@/components/ui";
+import { Heading, Star, SafeImage } from "@/components/ui";
 import { OpenQuoteButton } from "@/components/quote";
 import { homeCopy } from "@/lib/i18n/copy";
 
@@ -27,7 +26,7 @@ export async function QuoteCta() {
 
       {/* Photo #3023:1069 — section x=846 → artboard left 585; bleeds to right edge */}
       <div className="absolute left-[585px] right-0 top-0 z-10 hidden min-h-[737px] overflow-hidden xl:block">
-        <Image
+        <SafeImage
           src={QUOTE_FORM.image}
           alt={QUOTE_FORM.imageAlt}
           fill
@@ -85,7 +84,7 @@ export async function QuoteCta() {
       </div>
 
       <div className="relative mx-6 mb-6 h-[280px] overflow-hidden rounded-xl xl:hidden">
-        <Image
+        <SafeImage
           src={QUOTE_FORM.image}
           alt={QUOTE_FORM.imageAlt}
           fill

@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
 import Link from "next/link";
 import { cn } from "@/util/cn";
+import { SafeImage } from "@/components/ui";
 
 // Runs before paint on the client (positions the strip without a visible
 // jump); falls back to useEffect during SSR to avoid the hydration warning.
@@ -27,7 +27,7 @@ function ProjectCard({ card }: { card: HeroProjectCard }) {
       className="glass flex w-[310px] max-w-[calc(100vw-2rem)] items-center gap-3 rounded-[18px] bg-white/17 p-2.5 transition-colors hover:bg-white/25"
     >
       <div className="relative h-[107px] w-[98px] shrink-0 overflow-hidden rounded-[10px]">
-        <Image
+        <SafeImage
           src={card.image.src}
           alt={card.image.alt}
           fill

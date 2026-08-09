@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Heading, Button, InfoBox } from "@/components/ui";
+import { Container, Heading, Button, InfoBox, SafeImage } from "@/components/ui";
 import { kontaktCopy } from "@/lib/i18n/copy";
 
 /* Routes visitors who landed on /kontakt first — mirrors the home AUDIENCES
@@ -19,7 +18,7 @@ export async function KontaktAudiences() {
             {KONTAKT_AUDIENCES.cards.map((card, i) => (
               <InfoBox key={card.title} variant="mist" className="flex flex-col overflow-hidden">
                 <div className="relative aspect-[21/9]">
-                  <Image
+                  <SafeImage
                     src={card.image.src}
                     alt={card.image.alt}
                     fill

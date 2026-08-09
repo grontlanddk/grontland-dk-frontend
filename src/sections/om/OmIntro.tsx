@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Heading, StarChip } from "@/components/ui";
+import { Heading, StarChip, SafeImage } from "@/components/ui";
 import { omCopy } from "@/lib/i18n/copy";
 
 /* "Hvem er vi?" — mirrored home About (#3023:964): photo with the fact
@@ -15,7 +14,7 @@ export async function OmIntro() {
       <div className="mx-auto grid w-full max-w-7xl xl:min-h-[720px] xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         {/* Left — photo + centered fact chips; absolute on xl to bleed left */}
         <div className="relative min-h-[380px] max-xl:order-last xl:absolute xl:inset-y-0 xl:left-0 xl:right-[calc(50%-30px)] xl:min-h-0">
-          <Image
+          <SafeImage
             src={OM_INTRO.image.src}
             alt={OM_INTRO.image.alt}
             fill

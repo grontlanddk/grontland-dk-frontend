@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Heading } from "@/components/ui";
+import { Container, Heading, SafeImage } from "@/components/ui";
 import { homeCopy } from "@/lib/i18n/copy";
 
 /* SeoText — Figma #3023:1016. Black band: left garden photo, ring decor mid,
@@ -27,7 +26,7 @@ export async function SeoText() {
           <div className="relative z-10 flex flex-col gap-8 xl:flex-row xl:items-center xl:gap-[86px]">
             {/* Photo #3023:1044 */}
             <div className="relative h-[240px] w-full shrink-0 overflow-hidden rounded-xl xl:h-[339px] xl:w-[538px]">
-              <Image
+              <SafeImage
                 src={SEOTEXT.image}
                 alt={SEOTEXT.imageAlt}
                 fill

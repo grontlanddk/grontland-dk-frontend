@@ -1,10 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
-import { Container } from "@/components/ui";
+import { Container, SafeImage } from "@/components/ui";
 import { ArrowIcon, ChevronIcon } from "@/components/icons";
 import type { ServiceCard } from "@/lib/sanity/queries";
 
@@ -35,7 +34,7 @@ export function ServicesSlider({ items }: { items: readonly Item[] }) {
                 className="group flex h-full flex-col overflow-hidden rounded-[12px] border border-line bg-white transition-shadow hover:shadow-[0_16px_40px_rgba(31,61,46,0.12)]"
               >
                 <div className="relative h-[218px] shrink-0">
-                  <Image
+                  <SafeImage
                     src={item.image}
                     alt={item.imageAlt}
                     fill

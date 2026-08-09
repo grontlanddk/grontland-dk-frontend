@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Button, StarChip, Heading } from "@/components/ui";
+import { Container, Button, StarChip, Heading, SafeImage } from "@/components/ui";
 import { homeCopy } from "@/lib/i18n/copy";
 
 /* Figma image fill crop inside a fixed frame (#1009:1547, #1009:1596). */
@@ -20,7 +19,7 @@ function FigmaCroppedPhoto({
   sizes: string;
 }) {
   return (
-    <Image
+    <SafeImage
       src={src}
       alt={alt}
       width={width}

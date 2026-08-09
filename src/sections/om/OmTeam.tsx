@@ -1,7 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import { Container, Heading, InfoBox } from "@/components/ui";
+import { Container, Heading, InfoBox, SafeImage } from "@/components/ui";
 import { omCopy } from "@/lib/i18n/copy";
 
 /* Team leads — authentic facts from the old site's team page. Work photo per
@@ -24,7 +23,7 @@ export async function OmTeam() {
               <li key={member.name} className="h-full">
                 <InfoBox variant="light" className="flex h-full flex-col overflow-hidden border border-line">
                   <div className="relative aspect-[21/9]">
-                    <Image
+                    <SafeImage
                       src={member.image.src}
                       alt={member.image.alt}
                       fill

@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { StarChip } from "@/components/ui";
+import { StarChip, SafeImage } from "@/components/ui";
 import { type Project } from "@/constants/projects";
 import { projectsCopy } from "@/lib/i18n/copy";
 
@@ -13,7 +12,7 @@ export function ProjectCard({ project }: { project: Project }) {
     <Link href={`/projekter/${project.slug}`} className="group block">
       <div className="relative">
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border-4 border-leaf">
-          <Image
+          <SafeImage
             src={project.cardImage}
             alt={project.cardImageAlt}
             fill

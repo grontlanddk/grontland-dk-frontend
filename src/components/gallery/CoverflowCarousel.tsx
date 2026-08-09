@@ -2,12 +2,12 @@
 
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
-import Image from "next/image";
 import { ChevronIcon } from "@/components/icons";
 import { cn } from "@/util/cn";
 
 import { readGalleryMetrics, shortestLoopDistance } from "./galleryLayout";
 import type { GalleryItem } from "./types";
+import { SafeImage } from "@/components/ui";
 
 function CoverflowSlide({
   item,
@@ -58,7 +58,7 @@ function CoverflowSlide({
       {failed ? (
         <div className="h-full w-full rounded-[14px] bg-white ring-1 ring-inset ring-line" aria-hidden />
       ) : (
-        <Image
+        <SafeImage
           src={item.image.link}
           alt={item.image.alt || `Galleri billede ${index + 1}`}
           fill

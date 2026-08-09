@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { Container, Heading, StarChip } from "@/components/ui";
+import { Container, Heading, StarChip, SafeImage } from "@/components/ui";
 import { privateCopy } from "@/lib/i18n/copy";
 
 /* § 4 — "One team instead of several separate contractors" — the client's
@@ -13,7 +12,7 @@ export async function PrivateOneTeam() {
 
   return (
     <section className="relative overflow-hidden py-16 text-white xl:min-h-[580px] xl:py-24">
-      <Image
+      <SafeImage
         src={PRIVATE_ONE_TEAM.background.src}
         alt={PRIVATE_ONE_TEAM.background.alt}
         fill

@@ -1,6 +1,5 @@
-import Image from "next/image";
 
-import { Container, Heading } from "@/components/ui";
+import { Container, Heading, SafeImage } from "@/components/ui";
 import type { Project } from "@/constants/projects";
 import { ui } from "@/lib/i18n/copy";
 
@@ -43,7 +42,7 @@ export async function ProjectResult({ project }: { project: Project }) {
           {/* Photo + ring decor at its bottom-right corner (home SeoText treatment) */}
           <div className="relative w-full xl:min-w-0 xl:flex-1">
             <div className="relative z-10 h-[260px] w-full overflow-hidden rounded-xl xl:h-[380px]">
-              <Image
+              <SafeImage
                 src={image.src}
                 alt={image.alt}
                 fill
