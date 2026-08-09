@@ -175,13 +175,18 @@ export function HeroProjectCards({
       )}
       aria-label="Udvalgte projekter"
     >
-      {/* Copies 2-3 exist only for the seamless loop: aria-hidden takes them
-          out of the a11y tree and inert takes their links out of tab order. */}
-      {loop.map((card, i) => (
-        <div key={i} className="shrink-0" aria-hidden={i >= cards.length} inert={i >= cards.length}>
-          <ProjectCard card={card} />
-        </div>
-      ))}
+      {/* Copies 1 and 3 exist only for the seamless loop. The strip starts in
+          the MIDDLE copy (copy 1), so that copy stays interactive; outer
+          copies are aria-hidden + inert (out of a11y / tab order). */}
+      {loop.map((card, i) => {
+        const copy = Math.floor(i / cards.length);
+        const isMiddle = copy === 1;
+        return (
+          <div key={i} className="shrink-0" aria-hidden={!isMiddle} inert={!isMiddle}>
+            <ProjectCard card={card} />
+          </div>
+        );
+      })}
     </div>
   );
 }

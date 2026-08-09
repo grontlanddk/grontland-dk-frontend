@@ -44,7 +44,7 @@ export async function Hero() {
         {/* Figma dark gradient — darkens top + bottom for legibility. */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(170deg,rgba(0,0,0,0.8)_0%,rgba(0,0,0,0.06)_66%,rgba(0,0,0,0.8)_100%)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(170deg,rgba(0,0,0,0.8)_0%,rgba(0,0,0,0.06)_66%,rgba(0,0,0,0.8)_100%)]"
         />
         {/* Looped, drag-scrollable card strip anchored to the panel bottom. */}
         <div className="absolute inset-x-0 bottom-7 z-10">
@@ -102,7 +102,7 @@ export async function Hero() {
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(170deg,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.05)_55%,rgba(0,0,0,0.7)_100%)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(170deg,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.05)_55%,rgba(0,0,0,0.7)_100%)]"
         />
         <div className="absolute inset-x-0 bottom-4">
           <HeroProjectCards cards={cards} className="px-4" />
