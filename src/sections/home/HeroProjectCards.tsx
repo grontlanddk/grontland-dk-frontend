@@ -109,6 +109,9 @@ export function HeroProjectCards({
   }, [cards.length]);
 
   // Mouse click-drag (touch/trackpad already scroll natively).
+  // Never preventDefault on pointerdown (that kills child <Link> clicks),
+  // and only setPointerCapture after the 6px drag threshold so a plain
+  // click reaches the card link.
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "mouse") return;
     const el = ref.current;
@@ -117,24 +120,27 @@ export function HeroProjectCards({
     moved.current = false;
     startX.current = e.clientX;
     startScroll.current = el.scrollLeft;
-    try {
-      el.setPointerCapture(e.pointerId);
-    } catch {
-      /* no active pointer (e.g. synthetic events) — safe to ignore */
-    }
-    e.preventDefault();
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragging.current) return;
     const el = ref.current;
     if (!el) return;
-    if (Math.abs(e.clientX - startX.current) > 6) moved.current = true;
-    el.scrollLeft = startScroll.current - (e.clientX - startX.current);
+    const dx = e.clientX - startX.current;
+    if (!moved.current && Math.abs(dx) > 6) {
+      moved.current = true;
+      try {
+        el.setPointerCapture(e.pointerId);
+      } catch {
+        /* no active pointer — safe to ignore */
+      }
+    }
+    if (!moved.current) return;
+    el.scrollLeft = startScroll.current - dx;
   };
 
-  // Cards are links: swallow the click that ends a drag so navigation only
-  // happens on a genuine (non-drag) click.
+  // Swallow the click that ends a drag so navigation only happens on a
+  // genuine (non-drag) click.
   const onClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
     if (moved.current) {
       e.preventDefault();
@@ -147,7 +153,9 @@ export function HeroProjectCards({
     if (!dragging.current) return;
     dragging.current = false;
     try {
-      ref.current?.releasePointerCapture?.(e.pointerId);
+      if (ref.current?.hasPointerCapture?.(e.pointerId)) {
+        ref.current.releasePointerCapture(e.pointerId);
+      }
     } catch {
       /* pointer may not be captured — safe to ignore */
     }
