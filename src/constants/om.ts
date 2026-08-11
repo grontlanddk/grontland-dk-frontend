@@ -65,8 +65,8 @@ export const OM_TEAM = {
     {
       name: "Oleg",
       role: "Ansvarlig for finish og tømrerarbejde",
-      // Work photos per area (chat-export gallery) until portraits arrive.
-      image: { src: "/images/gallery/tomrer-2.jpg", alt: "Ny træterrasse under opbygning ved moderne villa" },
+      // Portraits from old site grontland.dk/assets/team/
+      image: { src: "/images/team/oleg.jpg", alt: "Oleg — ansvarlig for finish og tømrerarbejde" },
       trades: [
         "Spartling, maling og overflader",
         "Fliser, køkken og bad",
@@ -78,7 +78,7 @@ export const OM_TEAM = {
     {
       name: "Andrej",
       role: "Ansvarlig for belægning og beton",
-      image: { src: "/images/gallery/belaegning-3.jpg", alt: "Teglbelægning i sildebensmønster ved indgang" },
+      image: { src: "/images/team/andrej.jpg", alt: "Andrej — ansvarlig for belægning og beton" },
       trades: [
         "Fliser, belægning og natursten",
         "Trapper, stier og indkørsler",
@@ -91,7 +91,7 @@ export const OM_TEAM = {
       name: "Aleksandr",
       role: "Ansvarlig for landskabsarbejde",
       note: "Over 25 års erfaring",
-      image: { src: "/images/gallery/have-3.jpg", alt: "Klippede hække og plejet græsplæne" },
+      image: { src: "/images/team/aleksandr.jpg", alt: "Aleksandr — ansvarlig for landskabsarbejde" },
       trades: [
         "Terrænregulering",
         "Græs — såning eller rullegræs",

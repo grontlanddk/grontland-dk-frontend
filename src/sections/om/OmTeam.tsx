@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Container, Heading, InfoBox, SafeImage } from "@/components/ui";
 import { omCopy } from "@/lib/i18n/copy";
 
-/* Team leads — authentic facts from the old site's team page. Work photo per
-   trade area as card header until the client provides portraits. */
+/* Team leads — facts + portraits from the old site's /team page
+   (grontland.dk/assets/team/). */
 export async function OmTeam() {
   const { OM_TEAM } = omCopy();
   return (
@@ -22,13 +22,13 @@ export async function OmTeam() {
             {OM_TEAM.members.map((member) => (
               <li key={member.name} className="h-full">
                 <InfoBox variant="light" className="flex h-full flex-col overflow-hidden border border-line">
-                  <div className="relative aspect-[21/9]">
+                  <div className="relative aspect-[4/5]">
                     <SafeImage
                       src={member.image.src}
                       alt={member.image.alt}
                       fill
                       sizes="(min-width: 768px) 33vw, 100vw"
-                      className="object-cover"
+                      className="object-cover object-top"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-6">
