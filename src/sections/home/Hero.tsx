@@ -1,15 +1,15 @@
 
-import { Container, Button, Heading, Dots, ImageCarousel, SafeImage } from "@/components/ui";
+import { Container, Button, Heading, ImageCarousel, SafeImage } from "@/components/ui";
 import { OpenQuoteButton } from "@/components/quote";
 import { getProjects } from "@/lib/sanity/queries";
 import { homeCopy } from "@/lib/i18n/copy";
 import { HeroProjectCards, type HeroProjectCard } from "./HeroProjectCards";
 
-/* Hero — left copy column (dots → heading → description → CTAs → auto slider)
-   + right full-bleed image with glass project cards. Concentric-ring decor on
-   the seam. Structure mirrors Figma "Главная2" #1018:78. Cards are real CMS
-   projects linking to their pages; the desktop strip starts at the content
-   container's left edge and runs across the photo panel. */
+/* Hero — left copy column (brand mark → heading → description → CTAs → auto
+   slider) + right full-bleed image with glass project cards. Concentric-ring
+   decor on the seam. Mark from Figma #3132:72 / #3132:145 (home only). Cards
+   are real CMS projects; the desktop strip starts at the content container's
+   left edge and runs across the photo panel. */
 export async function Hero() {
   const projects = await getProjects();
   const HERO = homeCopy().HERO;
@@ -62,7 +62,16 @@ export async function Hero() {
 
       <Container className="relative z-10">
         <div className="max-w-[600px] pb-16 pt-28 xl:pb-8 xl:pt-28">
-          <Dots className="mb-5" />
+          {/* Figma #3132:145 — illustrated mark above H1 (replaces Dots). */}
+          <SafeImage
+            src="/images/brand/hero-mark.png"
+            alt=""
+            width={95}
+            height={56}
+            priority
+            className="mb-5"
+            aria-hidden
+          />
           <Heading as="h1" size="hero" className="mb-8 max-w-[580px]">
             {HERO.h1}
           </Heading>
