@@ -1,17 +1,14 @@
 import { ProjectCard } from "@/components/project";
 import { Container, Heading, Button } from "@/components/ui";
 import { AccentDots, RingDecor } from "@/sections/shared";
-import { getProjects } from "@/lib/sanity/queries";
+import { getProjectsNewestFirst } from "@/lib/sanity/queries";
 import { privateCopy } from "@/lib/i18n/copy";
 
-/* Featured private cases — shared ProjectCard on curated slugs (copy local,
-   project data from the CMS, kept in the curated order). */
+/* Featured private cases — latest 4 private projects from CMS (newest first). */
 export async function PrivateProjects() {
-  const all = await getProjects();
+  const all = await getProjectsNewestFirst();
   const PRIVATE_PROJECTS = privateCopy().PRIVATE_PROJECTS;
-  const projects = PRIVATE_PROJECTS.slugs
-    .map((slug) => all.find((p) => p.slug === slug))
-    .filter((project) => project !== undefined);
+  const projects = all.filter((p) => p.category === "private").slice(0, 4);
 
   return (
     <section className="relative overflow-x-clip bg-mist py-16 xl:py-24">

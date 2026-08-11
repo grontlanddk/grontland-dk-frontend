@@ -1,18 +1,17 @@
 import { ProjectCard } from "@/components/project";
 import { Container, Heading, Button } from "@/components/ui";
 import { AccentDots, RingDecor } from "@/sections/shared";
-import { getProjects } from "@/lib/sanity/queries";
+import { getProjectsNewestFirst } from "@/lib/sanity/queries";
 import { b2bCopy } from "@/lib/i18n/copy";
 
-/* § 5 — Subcontracting projects. ARC Amager is the one genuine b2b case in the
-   CMS; two trade-relevant private cases fill the row as reference work (curated
-   order). id="projekter" is the hero "View subcontracting projects" anchor. */
+/* § 5 — Subcontracting projects. B2B cases first (ARC), then newest other
+   projects to fill a row of 4. id="projekter" is the hero anchor. */
 export async function B2bProjects() {
-  const all = await getProjects();
+  const all = await getProjectsNewestFirst();
   const { B2B_PROJECTS } = b2bCopy();
-  const projects = B2B_PROJECTS.slugs
-    .map((slug) => all.find((p) => p.slug === slug))
-    .filter((project) => project !== undefined);
+  const featured = all.filter((p) => p.category === "b2b");
+  const rest = all.filter((p) => p.category !== "b2b");
+  const projects = [...featured, ...rest].slice(0, 4);
 
   return (
     <section
@@ -52,7 +51,7 @@ export async function B2bProjects() {
             </div>
           </div>
 
-          <ul className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <ul className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {projects.map((project) => (
               <li key={project.slug}>
                 <ProjectCard project={project} />

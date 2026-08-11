@@ -36,12 +36,13 @@ export const PRIVATE_SERVICES = {
 // § 3 — Completed projects (data from CMS by slug)
 export const PRIVATE_PROJECTS = {
   h2: "Se, hvad vi har udført for andre boligejere",
+  // Selection is dynamic (latest 4 private via getProjectsNewestFirst).
+  // Slugs kept as a migrate/seed hint of the intended set.
   slugs: [
-    "terrasse-og-haveomraade",
-    "belaegning-ved-bolig",
-    "facadeopgave",
-    "betontrappe-hellerup",
     "totalrenovering-skodsborg",
+    "belaegning-ved-bolig",
+    "betontrappe-hellerup",
+    "facadeopgave",
   ],
   ctas: [
     { label: "Se alle projekter", href: "/projekter" },

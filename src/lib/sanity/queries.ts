@@ -109,6 +109,11 @@ export function getProjects(): Promise<Project[]> {
   return localeFetch<Project[]>(`*[_type == "project"] | order(_createdAt asc) ${PROJECT}`);
 }
 
+/** Newest-first project list (audience landings / “latest N” teaser blocks). */
+export function getProjectsNewestFirst(): Promise<Project[]> {
+  return localeFetch<Project[]>(`*[_type == "project"] | order(_createdAt desc) ${PROJECT}`);
+}
+
 export function getProjectBySlug(slug: string): Promise<(Project & { related: Project[] }) | null> {
   return localeFetch(
     `*[_type == "project" && slug.current == $slug][0]{

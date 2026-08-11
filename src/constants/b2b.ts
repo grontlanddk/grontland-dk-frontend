@@ -71,7 +71,13 @@ export const B2B_WHY = {
 export const B2B_PROJECTS = {
   h2: "Underentreprise-projekter i København",
   sub: "Se, hvordan Grønt Land DK støtter entreprenører med belægning, dræn, bundopbygning, ekstra byggekapacitet og koordinerede arbejdspakker.",
-  slugs: ["belaegning-arc-amager", "belaegning-ved-bolig", "facadeopgave"],
+  // Selection is dynamic (b2b first, then newest others → 4). Slugs are a seed hint.
+  slugs: [
+    "belaegning-arc-amager",
+    "totalrenovering-skodsborg",
+    "belaegning-ved-bolig",
+    "betontrappe-hellerup",
+  ],
   ctas: [
     { label: "Se ARC-projektet", href: "/projekter/belaegning-arc-amager" },
     { label: "Se alle projekter", href: "/projekter" },
