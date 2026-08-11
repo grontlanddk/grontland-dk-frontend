@@ -12,7 +12,7 @@ export async function PrivateProjects() {
 
   return (
     <section className="relative overflow-x-clip bg-mist py-16 xl:py-24">
-      <RingDecor rotate={-130.97} className="bottom-[487px] left-[calc(50%+210px)]" />
+      <RingDecor rotate={-130.97} className="bottom-[407px] left-[calc(50%+210px)]" />
       <Container className="relative z-10">
         <div className="flex flex-col gap-10">
           {/* Dots over the CTA row, both right-aligned opposite the heading, and

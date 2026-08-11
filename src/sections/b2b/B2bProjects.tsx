@@ -18,7 +18,7 @@ export async function B2bProjects() {
       id="projekter"
       className="relative overflow-x-clip scroll-mt-24 bg-white py-16 xl:py-24"
     >
-      <RingDecor rotate={-130.97} className="bottom-[541px] left-[calc(50%+210px)]" />
+      <RingDecor rotate={-130.97} className="bottom-[461px] left-[calc(50%+210px)]" />
       <Container className="relative z-10">
         <div className="flex flex-col gap-10">
           {/* Dots over the CTA row, both right-aligned opposite the heading, and
