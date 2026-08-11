@@ -3,13 +3,13 @@
 import { useEffect } from "react";
 
 import { ChevronIcon } from "@/components/icons";
+import { SafeImage } from "@/components/ui";
 import { cn } from "@/util/cn";
 
 import { Backdrop } from "./Backdrop";
 import { wrapIndex } from "./galleryLayout";
 import { Modal } from "./Modal";
 import type { GalleryItem } from "./types";
-import { SafeImage } from "@/components/ui";
 
 export function GalleryLightbox({
   items,
@@ -56,42 +56,45 @@ export function GalleryLightbox({
     <>
       <Backdrop isOpen={isOpen} onClose={onClose} />
       <Modal isOpen={isOpen} onClose={onClose}>
-        <div className="relative flex min-h-0 flex-1 items-center justify-center px-4 pt-12 pb-4">
-          <div className="relative h-full w-full">
-            <SafeImage
-              key={current._key}
-              src={current.image.link}
-              alt={current.image.alt || ("Galleri billede")}
-              fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, 930px"
-              priority
-            />
+        {/* Viewport-stretch stage (nbyg GalleryModal): fill modal height, contain
+            the photo, keep side lanes clear so prev/next sit fully visible. */}
+        <div className="relative flex min-h-0 flex-1 items-center justify-center">
+          <div className="relative h-full w-full max-h-full px-14 pt-10 pb-6 sm:px-16 md:pt-12 md:pb-8">
+            <div className="relative h-full w-full">
+              <SafeImage
+                key={current._key}
+                src={current.image.link}
+                alt={current.image.alt || "Galleri billede"}
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 930px"
+                priority
+              />
+            </div>
           </div>
-        </div>
 
-        <div
-          className={cn(
-            "pointer-events-none absolute top-[calc(50%-27px)] right-0 left-0 z-30 flex justify-between px-4",
-            "lg:left-[calc(50%-492px)] lg:w-[984px]",
-          )}
-        >
-          <button
-            type="button"
-            aria-label={"Forrige billede"}
-            onClick={goPrev}
-            className="pointer-events-auto flex size-[54px] cursor-pointer items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+          <div
+            className={cn(
+              "pointer-events-none absolute inset-x-0 top-1/2 z-30 flex -translate-y-1/2 justify-between px-3 sm:px-4",
+            )}
           >
-            <ChevronIcon className="rotate-90" />
-          </button>
-          <button
-            type="button"
-            aria-label={"Næste billede"}
-            onClick={goNext}
-            className="pointer-events-auto flex size-[54px] cursor-pointer items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-          >
-            <ChevronIcon className="-rotate-90" />
-          </button>
+            <button
+              type="button"
+              aria-label="Forrige billede"
+              onClick={goPrev}
+              className="pointer-events-auto flex size-[54px] shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/55"
+            >
+              <ChevronIcon className="rotate-90" />
+            </button>
+            <button
+              type="button"
+              aria-label="Næste billede"
+              onClick={goNext}
+              className="pointer-events-auto flex size-[54px] shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/55"
+            >
+              <ChevronIcon className="-rotate-90" />
+            </button>
+          </div>
         </div>
       </Modal>
     </>

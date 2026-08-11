@@ -31,7 +31,7 @@ export function Modal({
     >
       <div
         className={cn(
-          "relative flex h-dvh w-full max-w-[930px] flex-col overflow-hidden bg-black shadow-md md:h-[95dvh] md:max-h-[95dvh] md:rounded-xl lg:h-[750px]",
+          "relative flex h-dvh w-full max-w-[930px] flex-col overflow-hidden bg-black shadow-md max-h-dvh md:h-[95dvh] md:max-h-[95dvh] md:rounded-xl lg:h-[750px]",
           className,
         )}
         onClick={(e) => e.stopPropagation()}
