@@ -25,7 +25,8 @@ export function Backdrop({
   return (
     <div
       className={cn(
-        "fixed inset-0 z-40 h-dvh w-dvw bg-black/60 transition-opacity duration-300 ease-in-out",
+        // Above sticky Header (z-50); Modal sits at z-[110].
+        "fixed inset-0 z-[100] h-dvh w-dvw bg-black/60 transition-opacity duration-300 ease-in-out",
         isOpen ? "opacity-100" : "pointer-events-none opacity-0",
         className,
       )}

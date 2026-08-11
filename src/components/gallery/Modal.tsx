@@ -18,7 +18,8 @@ export function Modal({
   return (
     <div
       className={cn(
-        "fixed inset-0 z-50 flex items-center justify-center p-0 transition-opacity duration-300 ease-out md:p-4",
+        // Above sticky Header (z-50) and page stacking contexts.
+        "fixed inset-0 z-[110] flex items-center justify-center p-0 transition-opacity duration-300 ease-out md:p-4",
         isOpen ? "opacity-100" : "pointer-events-none opacity-0",
       )}
       onClick={onClose}

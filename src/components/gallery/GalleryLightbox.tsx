@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 import { ChevronIcon } from "@/components/icons";
 import { SafeImage } from "@/components/ui";
@@ -10,6 +11,16 @@ import { Backdrop } from "./Backdrop";
 import { wrapIndex } from "./galleryLayout";
 import { Modal } from "./Modal";
 import type { GalleryItem } from "./types";
+
+const SCROLL_KEYS = new Set([
+  "ArrowUp",
+  "ArrowDown",
+  "PageUp",
+  "PageDown",
+  "Home",
+  "End",
+  " ",
+]);
 
 export function GalleryLightbox({
   items,
@@ -30,7 +41,26 @@ export function GalleryLightbox({
   useEffect(() => {
     if (!isOpen) return;
 
+    const html = document.documentElement;
+    html.classList.add("no-doc-scroll");
     document.body.classList.add("no-doc-scroll");
+
+    // overflow:hidden alone can fail when html also has overflow-x: clip.
+    const inDialog = (target: EventTarget | null) => {
+      const dialog = document.querySelector('[role="dialog"][aria-modal="true"]');
+      return !!(dialog && target instanceof Node && dialog.contains(target));
+    };
+
+    const preventScroll = (e: Event) => {
+      if (inDialog(e.target)) return;
+      e.preventDefault();
+    };
+
+    const onScrollKey = (e: KeyboardEvent) => {
+      if (!SCROLL_KEYS.has(e.key)) return;
+      if (inDialog(document.activeElement)) return;
+      e.preventDefault();
+    };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
@@ -40,19 +70,27 @@ export function GalleryLightbox({
       }
     };
 
+    window.addEventListener("wheel", preventScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
+    window.addEventListener("keydown", onScrollKey);
     document.addEventListener("keydown", handleKeyDown);
+
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      html.classList.remove("no-doc-scroll");
       document.body.classList.remove("no-doc-scroll");
+      window.removeEventListener("wheel", preventScroll);
+      window.removeEventListener("touchmove", preventScroll);
+      window.removeEventListener("keydown", onScrollKey);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, activeIndex, total, onActiveIndexChange]);
 
-  if (!isOpen || !current) return null;
+  if (!isOpen || !current || typeof document === "undefined") return null;
 
   const goPrev = () => onActiveIndexChange(wrapIndex(activeIndex - 1, total));
   const goNext = () => onActiveIndexChange(wrapIndex(activeIndex + 1, total));
 
-  return (
+  return createPortal(
     <>
       <Backdrop isOpen={isOpen} onClose={onClose} />
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -97,6 +135,7 @@ export function GalleryLightbox({
           </div>
         </div>
       </Modal>
-    </>
+    </>,
+    document.body,
   );
 }
