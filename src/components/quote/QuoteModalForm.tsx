@@ -6,8 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui";
 import { homeCopy } from "@/lib/i18n/copy";
+import { isQuoteImageError } from "@/lib/quote/images";
 import { quoteFormSchema, type QuoteFormInput } from "@/lib/quote/schema";
 import { cn } from "@/util/cn";
+
+import { QuoteUploadField } from "./QuoteUploadField";
 
 export const quoteInputClass =
   "h-11 w-full rounded-xl border border-line bg-white px-4 text-sm text-pine outline-none transition-colors placeholder:text-pine/40 focus:border-leaf";
@@ -15,10 +18,23 @@ export const quoteInputClass =
 const labelClass = "mb-1 block text-sm font-semibold";
 const errorClass = "mt-1 text-xs text-red-700";
 
+function imageErrorCopy(
+  error: string | undefined,
+  copy: ReturnType<typeof homeCopy>["QUOTE_FORM"],
+): string | null {
+  if (!isQuoteImageError(error)) return null;
+  if (error === "too_many") return copy.uploadTooMany;
+  if (error === "too_large") return copy.uploadTooLarge;
+  if (error === "total_too_large") return copy.uploadTotalTooLarge;
+  return copy.uploadBadType;
+}
+
 /* Quote modal fields — Figma #3023:1206, compacted to fit typical viewports. */
 export function QuoteModalForm() {
   const QUOTE_FORM = homeCopy().QUOTE_FORM;
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [photos, setPhotos] = useState<File[]>([]);
   const [succeeded, setSucceeded] = useState(false);
 
   const {
@@ -41,10 +57,21 @@ export function QuoteModalForm() {
   const onSubmit = handleSubmit(async (data) => {
     setSubmitError(null);
     try {
+      const body = new FormData();
+      body.set("name", data.name);
+      body.set("phone", data.phone);
+      body.set("email", data.email);
+      body.set("who", data.who);
+      body.set("task", data.task);
+      body.set("message", data.message);
+      body.set("website", data.website);
+      for (const photo of photos) {
+        body.append("images", photo);
+      }
+
       const res = await fetch("/api/quote", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body,
       });
 
       let payload: { ok?: boolean; error?: string } = {};
@@ -56,6 +83,12 @@ export function QuoteModalForm() {
 
       if (res.ok && payload.ok !== false) {
         setSucceeded(true);
+        return;
+      }
+
+      const imageMessage = imageErrorCopy(payload.error, QUOTE_FORM);
+      if (imageMessage) {
+        setUploadError(imageMessage);
         return;
       }
 
@@ -189,12 +222,18 @@ export function QuoteModalForm() {
           )}
         </label>
 
-        <div className="sm:col-span-2">
-          <span className={labelClass}>{QUOTE_FORM.upload}</span>
-          <div className="flex h-14 items-center justify-center rounded-xl border border-dashed border-moss/40 bg-mist px-4 text-center text-sm text-pine/50">
-            {QUOTE_FORM.uploadHint}
-          </div>
-        </div>
+        <QuoteUploadField
+          files={photos}
+          onFilesChange={setPhotos}
+          label={QUOTE_FORM.upload}
+          hint={QUOTE_FORM.uploadHint}
+          tooMany={QUOTE_FORM.uploadTooMany}
+          tooLarge={QUOTE_FORM.uploadTooLarge}
+          totalTooLarge={QUOTE_FORM.uploadTotalTooLarge}
+          badType={QUOTE_FORM.uploadBadType}
+          error={uploadError}
+          onError={setUploadError}
+        />
       </div>
 
       {submitError && (

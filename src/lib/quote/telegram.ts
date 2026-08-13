@@ -1,4 +1,21 @@
-import type { QuotePayload } from "./schema";
+import {
+  buildTelegramMediaGroupForm,
+  buildTelegramPhotoForm,
+  type QuoteImage,
+} from "./images.ts";
+
+export type QuoteTelegramFields = {
+  name: string;
+  phone: string;
+  email: string;
+  who: string;
+  task: string;
+  message: string;
+};
+
+export type TelegramTransport = {
+  fetch?: typeof fetch;
+};
 
 export class TelegramConfigError extends Error {
   constructor(message = "Telegram credentials are not configured") {
@@ -28,7 +45,10 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;");
 }
 
-function formatQuoteMessage(payload: QuotePayload): string {
+export function formatQuoteMessage(
+  payload: QuoteTelegramFields,
+  imageCount = 0,
+): string {
   const lines = [
     "<b>Ny forespørgsel</b>",
     "",
@@ -41,12 +61,20 @@ function formatQuoteMessage(payload: QuotePayload): string {
   if (payload.message) {
     lines.push("", `<b>Besked:</b>`, escapeHtml(payload.message));
   }
+  if (imageCount > 0) {
+    lines.push("", `<b>Billeder:</b> ${imageCount} (sendes herunder)`);
+  }
   return lines.join("\n");
 }
 
-export async function sendQuoteToTelegram(payload: QuotePayload): Promise<void> {
+export async function sendQuoteToTelegram(
+  payload: QuoteTelegramFields,
+  images: readonly QuoteImage[] = [],
+  transport: TelegramTransport = {},
+): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN?.trim();
   const chatId = process.env.TELEGRAM_CHAT_ID?.trim();
+  const post = transport.fetch ?? fetch;
 
   if (!token || !chatId) {
     throw new TelegramConfigError();
@@ -54,15 +82,69 @@ export async function sendQuoteToTelegram(payload: QuotePayload): Promise<void> 
 
   let res: Response;
   try {
-    res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    res = await post(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: chatId,
-        text: formatQuoteMessage(payload),
+        text: formatQuoteMessage(payload, images.length),
         parse_mode: "HTML",
         disable_web_page_preview: true,
       }),
+    });
+  } catch {
+    throw new TelegramSendError("Telegram network error");
+  }
+
+  let data: { ok?: boolean; description?: string } = {};
+  try {
+    data = (await res.json()) as { ok?: boolean; description?: string };
+  } catch {
+    if (!res.ok) {
+      throw new TelegramSendError(`Telegram HTTP ${res.status}`);
+    }
+    throw new TelegramSendError("Telegram returned invalid JSON");
+  }
+
+  if (!res.ok || !data.ok) {
+    throw new TelegramSendError(
+      data.description ?? `Telegram HTTP ${res.status}`,
+    );
+  }
+
+  if (images.length === 1) {
+    const photo = images[0];
+    if (!photo) return;
+    await postTelegramForm(
+      post,
+      token,
+      "sendPhoto",
+      buildTelegramPhotoForm(chatId, photo),
+    );
+    return;
+  }
+
+  if (images.length > 1) {
+    await postTelegramForm(
+      post,
+      token,
+      "sendMediaGroup",
+      buildTelegramMediaGroupForm(chatId, images),
+    );
+  }
+}
+
+async function postTelegramForm(
+  post: typeof fetch,
+  token: string,
+  method: "sendPhoto" | "sendMediaGroup",
+  body: FormData,
+): Promise<void> {
+  let res: Response;
+  try {
+    res = await post(`https://api.telegram.org/bot${token}/${method}`, {
+      method: "POST",
+      body,
     });
   } catch {
     throw new TelegramSendError("Telegram network error");
