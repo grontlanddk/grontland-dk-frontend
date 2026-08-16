@@ -42,6 +42,12 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "da_DK",
       images: [{ ...OG_IMAGE, alt: m.title }],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: m.title,
+      description: m.description,
+      images: [OG_IMAGE.url],
+    },
   };
 }
 

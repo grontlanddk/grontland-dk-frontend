@@ -4,9 +4,11 @@
  */
 import { homeCopy } from "@/lib/i18n/copy";
 import type { SiteSettings } from "@/lib/sanity/queries";
-import { SITE_URL } from "@/lib/seo/meta";
+import { OG_IMAGE, SITE_URL } from "@/lib/seo/meta";
 
 const BASE = SITE_URL;
+/** Square G mark in /public so JSON-LD URLs stay stable (app/apple-icon is hashed). */
+const LOGO = { url: "/logo.png", width: 180, height: 180 } as const;
 
 export const localBusiness = (s: SiteSettings) => ({
   "@context": "https://schema.org",
@@ -19,6 +21,18 @@ export const localBusiness = (s: SiteSettings) => ({
   address: { "@type": "PostalAddress", addressLocality: "København", addressCountry: "DK" },
   areaServed: s.area,
   openingHours: "Mo-Fr 08:00-17:00",
+  image: {
+    "@type": "ImageObject",
+    url: `${BASE}${OG_IMAGE.url}`,
+    width: OG_IMAGE.width,
+    height: OG_IMAGE.height,
+  },
+  logo: {
+    "@type": "ImageObject",
+    url: `${BASE}${LOGO.url}`,
+    width: LOGO.width,
+    height: LOGO.height,
+  },
 });
 
 /* Absolute URL (DA unprefixed). `locale` kept for call-site compatibility. */

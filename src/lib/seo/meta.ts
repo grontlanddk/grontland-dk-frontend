@@ -58,5 +58,11 @@ export function pageMetadata(opts: {
       locale: "da_DK",
       images: [image ? { url: image.url, alt: image.alt ?? title } : { ...OG_IMAGE, alt: title }],
     },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: description ?? undefined,
+      images: [image?.url ?? OG_IMAGE.url],
+    },
   };
 }
