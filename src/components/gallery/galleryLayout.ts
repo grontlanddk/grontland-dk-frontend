@@ -2,10 +2,6 @@
 export const GALLERY_GAP = 24;
 export const OVERLAP_STRIDE_FACTOR = 0.52;
 
-export function wrapIndex(index: number, total: number): number {
-  return ((index % total) + total) % total;
-}
-
 /** Signed distance on a circular index ring (negative = left of active). */
 export function shortestLoopDistance(
   index: number,
